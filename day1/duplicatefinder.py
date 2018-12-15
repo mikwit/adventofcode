@@ -16,15 +16,24 @@ def file_summator(input_file="", current_number=0):
     return(int(total))
 
 
+def dup_finder(input_file="", verbosity="", current_number=0):
+    in_file = open(input_file, "r")
+    seen = {0}
+    freq = 0
+    numbers = []
+    for each_number in in_file:
+        numbers.append(int(each_number))
+    while True:
+        for num in numbers:
+            freq += num
+            if freq in seen:
+                return freq
+            seen.add(freq)
 
 
 def file_duplicator(input_file="", verbosity="", current_number=0):
 
     offset = file_summator(input_file, current_number)
-
-
-
-
 
     in_file = open(input_file, "r")
     total = current_number
@@ -156,5 +165,6 @@ if __name__ == "__main__":
     parser.add_argument('--file', '-f', dest='file', help='please give me a file to read from')
     parser.add_argument('--verbose', '-v', action='count', help='let me know if you want to see more details')
     args = parser.parse_args()
-    print(file_duplicator(args.file, args.verbose, 0))
+    print(dup_finder(args.file, args.verbose, 0))
+    # print(file_duplicator(args.file, args.verbose, 0))
 
