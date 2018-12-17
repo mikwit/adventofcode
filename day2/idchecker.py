@@ -1,40 +1,33 @@
 import argparse
 
-
-def dup_char_checker(boxid="", verbosity=""):
+def char_counter(boxid="", verbosity=""):
     boxid = boxid
-    
     seen = []
+    seen_twice = []
+    seen_thrice = []
 
-    count = []
+    count_two = 0
+    count_three = 0
 
-
-    tick = 0
     for b in boxid:
         if b not in seen:
             seen.append(b)
-            count.append(dict(char=b, count=1))
-            tick += 1
         else:
-            # print("duplicate in seen: {0} - {1}" .format(seen.index(b), seen[seen.index(b)]))
-            # # new_count = count[tick]
-            # # print("duplicate in {}".format(count[tick]))
-            # print("location in count: index {}".format(seen.index(b)))
+            if b not in seen_twice:
+                seen_twice.append(b)
+            else:
+                if b not in seen_thrice:
+                    seen_thrice.append(b)
 
-            # new_count = count[seen.index(b)]['count'] + 1
+    for item in seen_twice:
+        if item not in seen_thrice:
+            count_two = 1
+        else:
+            count_three = 1
 
-            count[seen.index(b)]['count'] = count[seen.index(b)]['count'] + 1
+    counts = [count_two, count_three]
 
-            # print("current count: {0}, new count: {1}".format(count[seen.index(b)], "test"))
-            # print("current count: {0}, new count: {1}".format(count[seen.index(b)]['count'], new_count))
-
-    if verbosity:
-        print("count: {0}".format(count))
-        print("")
-
-
-    return(count)
-
+    return(counts)
 
 
 def id_checker(input_file="", verbosity=""):
@@ -46,46 +39,19 @@ def id_checker(input_file="", verbosity=""):
         print("boxids: {}".format(boxids))
         print("")
 
-
-    results = []
-
-
+    boxids_with_two = 0
+    boxids_with_three = 0
     for bid in boxids:
-        results.append(dict(boxid=bid, results=dup_char_checker(bid, verbosity)))
-
-    if verbosity:
-
-        print("\n\n\n")
-        print("full results: {}".format(results))
-
-    # for bid in boxids:
-    #     seen = []
-    #     if verbosity:
-    #         print("bid: {0}".format(bid))
-    #     for char in bid:
-    #         if char not in seen:
-    #             seen.append(char)
-    #             if verbosity:
-    #                 print("seen: {}".format(seen))
-    #         else:
-    #             results.append(dict(bid=char))
-    #             if verbosity:
-    #                 print("results: {}".format(results))
-
-
-
-
-    return(boxids)
-
-
-
-
-
-
-
-
-
-
+        if char_counter(bid, verbosity)[0] == 1:
+            if verbosity:
+                print("duplicate in {0}".format(bid))
+            boxids_with_two += 1
+        if char_counter(bid, verbosity)[1] == 1:
+            if verbosity:
+                print("triplicate in {0}".format(bid))
+            boxids_with_three += 1
+    multiplier = boxids_with_two * boxids_with_three
+    return(multiplier)
 
 
 if __name__ == "__main__":
@@ -95,12 +61,7 @@ if __name__ == "__main__":
     parser.add_argument('--verbose', '-v', action='count', help='let me know if you want to see more details')
     args = parser.parse_args()
 
-
     print(id_checker(args.file, args.verbose))
-    # print(dup_finder(args.file, args.verbose, 0))
-
-
-    # print(file_duplicator(args.file, args.verbose, 0))
 
 
 
