@@ -7,7 +7,6 @@ import sys
 
 
 def data_array(input_file="data.txt"):
-    in_file = open(input_file, "r")
     with open(input_file) as f:
         content = f.read().strip()
         array_of_input = content.split()
