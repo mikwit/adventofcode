@@ -1,4 +1,5 @@
 import sys
+
 # import argparse
 
 # parser = argparse.ArgumentParser(description='take input file and find duplicate frequencies')
@@ -20,7 +21,7 @@ def find_2020_pairs(expenses):
     for expense in expenses:
         for other_expense in expenses:
             exp_total = expense + other_expense
-            if (exp_total == 2020):
+            if exp_total == 2020:
                 product = expense * other_expense
                 if product not in pairs_dict.keys():
                     pairs_dict[product] = [expense, other_expense]
@@ -39,7 +40,7 @@ def find_2020_triples(expenses):
         for other_expense in expenses:
             for third_expense in expenses:
                 exp_total = expense + other_expense + third_expense
-                if (exp_total == 2020):
+                if exp_total == 2020:
                     product = expense * other_expense * third_expense
                     if product not in triples_dict.keys():
                         triples_dict[product] = [expense, other_expense, third_expense]
