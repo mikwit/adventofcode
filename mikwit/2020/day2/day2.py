@@ -10,8 +10,10 @@ def count_valid_passwords(password_data):
 
     for password_policy_line in password_data.split("\n"):
         # print(f"current line is: {password_policy_line}")
+
         password_policy_array = password_policy_line.split(":")
         # print(f"password_policy_array is: {password_policy_array}")
+
         policy = password_policy_array[0]
         password = password_policy_array[1]
         # print(f"policy is: {policy}, password is: {password}")
@@ -19,9 +21,11 @@ def count_valid_passwords(password_data):
         # figure out what the policy is
         policy_min = int(policy.split("-")[0])
         # print(f"policy_min is {policy_min}")
+
         policy_max_with_garbage = policy.split("-")[1]
         policy_max = int(policy_max_with_garbage.split(" ")[0])
         # print(f"policy_max is {policy_max}")
+
         policy_char = policy.split(" ")[1]
         # print(f"policy_char is {policy_char}")
 
@@ -43,8 +47,10 @@ def count_actual_valid_passwords(password_data):
 
     for password_policy_line in password_data.split("\n"):
         # print(f"current line is: {password_policy_line}")
+
         password_policy_array = password_policy_line.split(":")
         # print(f"password_policy_array is: {password_policy_array}")
+
         policy = password_policy_array[0]
         password = password_policy_array[1]
 
@@ -57,6 +63,7 @@ def count_actual_valid_passwords(password_data):
         position_two = int(position_two_with_space.split(" ")[0])
         # print(f"policy_max is {policy_max}")
         # print(f"policy_max variable type is: {type(policy_max)}")
+
         policy_char = policy.split(" ")[1]
         # print(f"policy_char is {policy_char}")
 
