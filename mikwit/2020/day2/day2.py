@@ -57,6 +57,7 @@ def count_actual_valid_passwords(password_data):
         # figure out what the policy is
         #     each char represents position in string, total 2 positions
         #     if one and only one position contains the letter, then valid
+        #     NOTE: don't need to subtract 1 for indexing password, because char0 is " "
         position_one = int(policy.split("-")[0])
 
         position_two_with_space = policy.split("-")[1]
