@@ -1,3 +1,3 @@
 # adventofcode
 
-contributors: mikwit, lwhite
+contributors: mikwit, lwhite17
