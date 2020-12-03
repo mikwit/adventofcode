@@ -1,0 +1,12 @@
+TODO:
+
+- be able to output an answer
+- read input from a file?
+    - instead, I could store the data in my code
+    - read each data entry in the dataset
+    - for each data entry, I need to:
+        - get the password policy
+        - get the password
+        - check the contents of the password to see if they match the policy
+        - output/record the password if valid
+            - alternatively, just increase valid count, instead of tracking the valid

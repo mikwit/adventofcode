@@ -2,6 +2,7 @@
 
 
 def count_actual_valid_passwords(input_data):
+
     valid_password_count = 0
 
     for line in input_data.split("\n"):
