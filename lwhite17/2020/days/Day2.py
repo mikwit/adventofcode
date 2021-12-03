@@ -1,3 +1,6 @@
+import AoC_tools as AT
+
+
 def parse_passwords_1(passwords):
     noValid = 0
 
@@ -32,8 +35,7 @@ def parse_passwords_1(passwords):
         # check threshold
         if minTimes <= times <= maxTimes:
             noValid += 1
-
-    print(noValid)
+    return noValid
 
 
 def parse_passwords_2(passwords):
@@ -71,13 +73,30 @@ def parse_passwords_2(passwords):
             continue
         if isPos1 or isPos2:
             noValid += 1
+    return noValid
 
-    print(noValid)
+
+def part_one(input_data):
+    res = parse_passwords_1(input_data)
+    print("\nnumber of valid passwords: ", res)
+
+
+def part_two(input_data):
+    res = parse_passwords_2(input_data)
+    print("\nnumber of valid passwords: ", res)
+
+
+def both(input_data):
+    res = parse_passwords_1(input_data)
+    print("\nnumber of valid passwords: ", res)
+    res = parse_passwords_2(input_data)
+    print("number of valid passwords: ", res)
 
 
 if __name__ == '__main__':
-    with open('data2.txt', 'r') as f:
-        passwords = f.read().split('\n')
+    passwords = AT.load_txt(input("please enter data path: \n"))
 
-    # parse_passwords_1(passwords)
-    parse_passwords_2(passwords)
+    res = parse_passwords_1(passwords)
+    print("\npart one number of valid passwords: ", res)
+    res = parse_passwords_2(passwords)
+    print("part two number of valid passwords: ", res)
