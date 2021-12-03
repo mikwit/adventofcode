@@ -49,28 +49,32 @@ def find_rating_value(data, criteria):
     remaining_data = data
     # sift through data to eliminate rating values
     for i in range(data.shape[1]):
-        # criteria uses most common value for oxygen
+        # count number of 0's and 1's
+        counts = np.bincount(remaining_data[:, i])
+        # use most common values for oxygen
         if 'max' in criteria:
-            crit_val = int(np.bincount(remaining_data[:, i]).argmax())
-        # criteria uses least common value for oxygen
+            if counts[0] == counts[1]:
+                crit_val = 1
+            else:
+                crit_val = counts.argmax(axis=0)
+        # use least common values for carbon
         else:
-            crit_val = int(np.bincount(remaining_data[:, i]).argmin())
-        # keep only rows with specified value in current column i
+            if counts[0] == counts[1]:
+                crit_val = 0
+            else:
+                crit_val = counts.argmin(axis=0)
         remaining_data = remaining_data[remaining_data[:, i] == int(crit_val)]
         if remaining_data.shape[0] == 2:
             if 'max' in criteria:
                 remaining_data = remaining_data[remaining_data[:, i+1] == 1]
             else:
-                remaining_data = remaining_data[remaining_data[:, i + 1] == 0]
+                remaining_data = remaining_data[remaining_data[:, i+1] == 0]
             break
         if remaining_data.shape[0] == 1:
             break
 
     # get first row of multidimensional array
     rating_array = remaining_data[0]
-
-    print(rating_array)
-
     # convert array to a list of string integers to a string binary number
     rating_str = "".join([str(val) for val in rating_array])
     # convert binary to decimal
@@ -99,7 +103,10 @@ if __name__ == '__main__':
         use_data = load_txt(r'C:\Users\leaht\Documents\AoC\2021\Data\Data_Day_3.txt')
     else:
         use_data = load_txt(input("please enter data path: \n"))
+
+    # example data
     # use_data = ['00100', '11110', '10110', '10111', '10101', '01111',
     #             '00111', '11100', '10000', '11001', '00010', '01010']
+
     use_data = format_data(data=use_data)
     both(data=use_data)
