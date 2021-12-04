@@ -18,7 +18,7 @@ import sys
 
 #         # for line in content:
 #         # exit()
-#         # 
+#         #
 #         # array_of_input = content.split()
 #         # final_array = [int(each_int) for each_int in array_of_input]
 #         # print(f"{final_array}")
@@ -30,7 +30,7 @@ import sys
 def get_drawing_sequence(input_file="data.txt"):
     with open(input_file) as f:
         for line in f:
-            array_of_input = line.split(',')
+            array_of_input = line.split(",")
 
             final_array = [int(each_int) for each_int in array_of_input]
             # print(f"final_array = {final_array}")
@@ -51,7 +51,7 @@ def get_bingo_cards(input_file="data.txt"):
             line = bleh_line.strip()
 
             if any(map(str.isdigit, line)):
-            # if line.contains_digit():
+                # if line.contains_digit():
                 current_card_lines.append(line)
             else:
                 bingo_cards[card_number] = current_card_lines.copy()
@@ -68,8 +68,6 @@ def get_bingo_cards(input_file="data.txt"):
     return bingo_cards
 
 
-
-
 # for each bingo card
 # generate winning combinations
 # columns
@@ -79,7 +77,8 @@ def get_bingo_cards(input_file="data.txt"):
 # after 5 numbers, search for any winning combinations containing those numbers
 
 
-# def 
+# def
+
 
 def get_winning_sequences(bingo_cards):
     winning_sequences = {}
@@ -130,8 +129,6 @@ def get_winning_sequences(bingo_cards):
     return winning_sequences
 
 
-
-
 def play_bingo(drawing_sequence, bingo_cards):
     draws = []
     winning_sequences = get_winning_sequences(bingo_cards)
@@ -147,7 +144,8 @@ def play_bingo(drawing_sequence, bingo_cards):
                         print(f"found it")
                         return (card, win_sequence, draw)
                     # else:
-                        # print("no")
+                    # print("no")
+
 
 def play_bingo_to_lose(drawing_sequence, bingo_cards):
     draws = []
@@ -173,29 +171,28 @@ def play_bingo_to_lose(drawing_sequence, bingo_cards):
                         else:
                             # print(f"cards remaining: {temp_cards}")
                             if card in temp_cards.keys():
-                                print(f"last winning card is {card}, {card_win_sequences}")
+                                print(
+                                    f"last winning card is {card}, {card_win_sequences}"
+                                )
                                 return (card, win_sequence, draw)
 
                         # temp_cards.pop(card)
                         # continue
                     # else:
-                        # print("no")
-
-
+                    # print("no")
             # return
 
 
-
-
 def main():
-
 
     drawing_sequence = get_drawing_sequence()
     bingo_cards = get_bingo_cards()
     # print(f"{bingo_cards}")
     # data = data_array()
 
-    winning_card, winning_sequence, last_number = play_bingo(drawing_sequence, bingo_cards)
+    winning_card, winning_sequence, last_number = play_bingo(
+        drawing_sequence, bingo_cards
+    )
 
     full_card = bingo_cards[winning_card]
     print(f"full_card: {full_card}")
@@ -219,17 +216,18 @@ def main():
                 # print(f"{number} from card was not used in {draws_used}")
                 winning_card_sum += int(number)
             # else:
-                # print(f"{number} in draws {draws_used}")
+            # print(f"{number} in draws {draws_used}")
     # for ea_number in winning_sequence:
-        # winning_card_sum -= int(ea_number)
+    # winning_card_sum -= int(ea_number)
     print(f"winning_card_sum = {winning_card_sum}")
 
-    print(f"! PART1 Answer: winning_card_sum * last_number_called = {winning_card_sum * int(last_number)}")
+    print(
+        f"! PART1 Answer: winning_card_sum * last_number_called = {winning_card_sum * int(last_number)}"
+    )
 
-
-
-
-    winning_card, winning_sequence, last_number = play_bingo_to_lose(drawing_sequence, bingo_cards)
+    winning_card, winning_sequence, last_number = play_bingo_to_lose(
+        drawing_sequence, bingo_cards
+    )
 
     full_card = bingo_cards[winning_card]
     print(f"full_card: {full_card}")
@@ -253,22 +251,14 @@ def main():
                 # print(f"{number} from card was not used in {draws_used}")
                 winning_card_sum += int(number)
             # else:
-                # print(f"{number} in draws {draws_used}")
+            # print(f"{number} in draws {draws_used}")
     # for ea_number in winning_sequence:
-        # winning_card_sum -= int(ea_number)
+    # winning_card_sum -= int(ea_number)
     print(f"last_winning_card_sum = {winning_card_sum}")
 
-    print(f"! PART2 Answer: last_winning_card_sum * last_number_called = {winning_card_sum * int(last_number)}")
-
-
-
-
-
-
-
-
-
-
+    print(
+        f"! PART2 Answer: last_winning_card_sum * last_number_called = {winning_card_sum * int(last_number)}"
+    )
 
     # product = 1
     # for number in winning_sequence:
@@ -278,7 +268,7 @@ def main():
     # print(f"product of winning card's sequence: {product}")
 
     exit()
-    
+
     # test a subset
     # data = data[:5]
     # data.append(479)
@@ -305,7 +295,6 @@ def main():
 
     print(f"o2 * c02 = {o2 * co2}")
     # print(f"final position (horizontal * vertical) = {final_position}")
-
 
     return
 
