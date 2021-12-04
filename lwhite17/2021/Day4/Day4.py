@@ -32,26 +32,25 @@ def format_data(data):
         int_line = list(map(float, line.split()))
 
         if ind % 5 == 0:
+            # create new card / array
             current_card = np.zeros((5, 5))
         elif ind % 5 == 4:
+            # add finished card (array) to list of cards (arrays)
             bingo_cards.append(current_card)
+        # add line to array
         current_card[ind % 5, :] = int_line
 
     return number_draws, bingo_cards
 
 
-def call_bingo(number_draws, bingo_cards):
+def call_first_winner(number_draws, bingo_cards):
+
     for ind, call in enumerate(number_draws):
-        for card in bingo_cards:
+        for card_ind, card in enumerate(bingo_cards):
+            # check if called values complete any rows/columns of each card
             row_status = np.isin(card, number_draws[:ind+1]).all(axis=1)
             col_status = np.isin(card, number_draws[:ind+1]).all(axis=0)
-
-            pass
-
-            if row_status.any():
-                return card, call
-
-            if col_status.any():
+            if row_status.any() or col_status.any():
                 return card, call
 
 
@@ -59,57 +58,59 @@ def part_one(data, number_draws=None, bingo_cards=None):
     if not number_draws and not bingo_cards:
         if type(data[0]) == str:
             number_draws, bingo_cards = format_data(data=data)
-    winning_card, call = call_bingo(number_draws=number_draws, bingo_cards=bingo_cards)
+    winning_card, call = call_first_winner(number_draws=number_draws, bingo_cards=bingo_cards)
 
+    # score winning card
     card_sum = winning_card.sum()
-    call_sum = sum(number_draws[:number_draws.index(call)+1])
-
+    call_sum = winning_card[np.isin(winning_card, number_draws[:number_draws.index(call)+1])].sum()
     return (card_sum-call_sum) * call
+
+
+def call_last_winner(number_draws, bingo_cards):
+    done_cards = []
+    for ind, call in enumerate(number_draws):
+        for card_ind, card in enumerate(bingo_cards):
+            # check if called values complete any rows/columns of each card
+            row_status = np.isin(card, number_draws[:ind + 1]).all(axis=1)
+            col_status = np.isin(card, number_draws[:ind + 1]).all(axis=0)
+            if row_status.any() or col_status.any():
+                # add winning card to list of winning cards until all win
+                if card_ind in done_cards:
+                    continue
+                else:
+                    done_cards.append(card_ind)
+                if len(done_cards) == len(bingo_cards):
+                    # get index of last card that won
+                    last_card = done_cards[-1]
+                    return bingo_cards[last_card], call
 
 
 def part_two(data, number_draws=None, bingo_cards=None):
     if not number_draws and not bingo_cards:
         if type(data[0]) == str:
             number_draws, bingo_cards = format_data(data=data)
-    return 0
+    losing_card, call = call_last_winner(number_draws=number_draws, bingo_cards=bingo_cards)
+
+    # score losing card
+    card_sum = losing_card.sum()
+    call_sum = losing_card[np.isin(losing_card, number_draws[:number_draws.index(call)+1])].sum()
+    return (card_sum-call_sum) * call
 
 
 def both(data):
     number_draws, bingo_cards = format_data(data=data)
-    print("Score of winning board is: " + str(part_one(data=data, number_draws=number_draws,
-                                                       bingo_cards=bingo_cards)))
-
-    return 0
+    print("Score of first winning board is: " + str(part_one(data=data, number_draws=number_draws,
+                                                             bingo_cards=bingo_cards)))
+    print("Score of last winning board is: " + str(part_two(data=data, number_draws=number_draws,
+                                                            bingo_cards=bingo_cards)))
 
 
 if __name__ == '__main__':
-    # if input("Use pre-loaded data?\n") in ['y', 'Y', 'yes', 'Yes', 'YES']:
-    #     use_data = load_txt('Data.txt')
-    # else:
-    #     use_data = load_txt(input("please enter data path: \n"))
+    if input("Use pre-loaded data?\n") in ['y', 'Y', 'yes', 'Yes', 'YES']:
+        use_data = load_txt('Data.txt')
+    else:
+        use_data = load_txt(input("please enter data path: \n"))
 
-    # example data
-
-    # use_data = [[7, 4, 9, 5, 11, 17, 23, 2, 0, 14, 21, 24, 10, 16, 13, 6, 15, 25, 12, 22, 18, 20, 8, 19, 3, 26, 1],
-    #
-    #             22, 13, 17, 11, 0,
-    #             8, 2, 23, 4, 24,
-    #             21, 9, 14, 16, 7,
-    #             6, 10, 3, 18, 5,
-    #             1, 12, 20, 15, 19,
-    #
-    #             3, 15, 0, 2, 22,
-    #             9, 18, 13, 17, 5,
-    #             19, 8, 7, 25, 23,
-    #             20, 11, 10, 24, 4,
-    #             14, 21, 16, 12, 6,
-    #
-    #             14, 21, 17, 24, 4,
-    #             10, 16, 15, 9, 19,
-    #             18, 8, 23, 26, 20,
-    #             22, 11, 13, 6, 5,
-    #             2, 0, 12, 3, 7]
-
-    use_data = load_txt('SampleData.txt')
-    # use_data = load_txt('Data.txt')
+    # test using sample data
+    # use_data = load_txt('SampleData.txt')
     both(data=use_data)
