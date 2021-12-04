@@ -44,15 +44,13 @@ def format_data(data):
 
 
 def call_first_winner(number_draws, bingo_cards):
-
     for ind, call in enumerate(number_draws):
-        if ind > 3:
-            for card_ind, card in enumerate(bingo_cards):
-                # check if called values complete any rows/columns of each card
-                row_status = np.isin(card, number_draws[:ind+1]).all(axis=1)
-                col_status = np.isin(card, number_draws[:ind+1]).all(axis=0)
-                if row_status.any() or col_status.any():
-                    return card, call
+        for card_ind, card in enumerate(bingo_cards):
+            # check if called values complete any rows/columns of each card
+            row_status = np.isin(card, number_draws[:ind+1]).all(axis=1)
+            col_status = np.isin(card, number_draws[:ind+1]).all(axis=0)
+            if row_status.any() or col_status.any():
+                return card, call
 
 
 def part_one(data, number_draws=None, bingo_cards=None):
@@ -70,21 +68,20 @@ def part_one(data, number_draws=None, bingo_cards=None):
 def call_last_winner(number_draws, bingo_cards):
     done_cards = []
     for ind, call in enumerate(number_draws):
-        if ind > 3:
-            for card_ind, card in enumerate(bingo_cards):
-                # check if called values complete any rows/columns of each card
-                row_status = np.isin(card, number_draws[:ind + 1]).all(axis=1)
-                col_status = np.isin(card, number_draws[:ind + 1]).all(axis=0)
-                if row_status.any() or col_status.any():
-                    # add winning card to list of winning cards until all win
-                    if card_ind in done_cards:
-                        continue
-                    else:
-                        done_cards.append(card_ind)
-                    if len(done_cards) == len(bingo_cards):
-                        # get index of last card that won
-                        last_card = done_cards[-1]
-                        return bingo_cards[last_card], call
+        for card_ind, card in enumerate(bingo_cards):
+            # check if called values complete any rows/columns of each card
+            row_status = np.isin(card, number_draws[:ind + 1]).all(axis=1)
+            col_status = np.isin(card, number_draws[:ind + 1]).all(axis=0)
+            if row_status.any() or col_status.any():
+                # add winning card to list of winning cards until all win
+                if card_ind in done_cards:
+                    continue
+                else:
+                    done_cards.append(card_ind)
+                if len(done_cards) == len(bingo_cards):
+                    # get index of last card that won
+                    last_card = done_cards[-1]
+                    return bingo_cards[last_card], call
 
 
 def part_two(data, number_draws=None, bingo_cards=None):
